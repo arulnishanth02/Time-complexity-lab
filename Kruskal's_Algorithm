@@ -1,0 +1,29 @@
+def find(parent, i):
+    while parent[i] != i:
+        i = parent[i]
+    return i
+
+def union(parent, x, y):
+    parent[x] = y
+
+n = int(input("Enter number of vertices: "))
+e = int(input("Enter number of edges: "))
+
+edges = []
+for _ in range(e):
+    u, v, w = map(int, input("Enter u v weight: ").split())
+    edges.append((w, u, v))
+
+edges.sort()
+parent = [i for i in range(n)]
+mincost = 0
+
+for w, u, v in edges:
+    x = find(parent, u)
+    y = find(parent, v)
+    if x != y:
+        print("Edge:", u, "-", v, "Cost:", w)
+        mincost += w
+        union(parent, x, y)
+
+print("Minimum Cost =", mincost)
